@@ -1,14 +1,16 @@
-import { useState } from 'react'
-
+import { useState } from "react";
+import Todos from "./components/Todos";
+import AddTodo from "./components/AddTodo";
+import './App.css'
+  
 function App() {
-
   return (
     <>
-      <p className="text-red-400">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <h1>Learn about redux toolkit</h1>
+    <AddTodo />
+    <Todos />
+  </>
+  );
 }
 
-export default App
+export default App;
