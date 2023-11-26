@@ -23,6 +23,7 @@ export class AuthServices {
                 return userAccount;
             }
         } catch (error) {
+            console.log(`Error occurs in appwrite for Creating account :  ${error}`)
             throw error;
         }
     }
