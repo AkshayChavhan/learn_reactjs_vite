@@ -603,6 +603,61 @@ class MyPureComponent extends PureComponent {
 
 --------------------------------------------------------------------------------------------------------------------
 
+## createElement() :- 
+
+-To create React elements
+-It is the function that gets invoked when JSX is transpiled by tools like Babel.
+
+>>> Syntax
+React.createElement(type, props, ...children);
+
+const element = React.createElement('div', { className: 'container' }, 'Hello, React!');
+
+above element is equaivalent to below jsx
+
+const element = <div className="container">Hello, React!</div>;
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Babel :- 
+
+Its a popular JS compiler used to convert ECMAScript 2015+ (ES6+) code into a backward-compatible 
+version of JavaScript that can be run in older browsers or environments.
+
+It is often referred to as a "transpiler" because it transforms code from one version of JavaScript 
+to another without actually executing it.
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Tree Shaking :- 
+
+Tree shaking is a technique in JavaScript module bundlers (such as Webpack) for eliminating or "shaking off" 
+unused code from the final bundle. The goal of tree shaking is to reduce the size of the JavaScript 
+bundle that is sent to the client by removing dead code or code paths that are never executed.
+This can significantly improve the performance of web applications by minimizing the amount of code that 
+needs to be downloaded and parsed.
+
+Here are the key points about tree shaking:
+
+<!-- Unused Code Elimination: -->
+<!-- ES6 Module Syntax: -->
+<!-- Dynamic Imports: -->
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+<!-- REACT FIBER -->
+
+React Fiber is an internal architecture of React that allows concurrent rendering and incremental updates.
+It was introduced with React v16.3
+
+This increase efficiency when rendering anumations ,gestures etc. and also helps in assigning priority to 
+updates based on requirements , thereby increasing overall efficiency.
+
+
+
 
 
 
