@@ -1,3 +1,49 @@
+INDEX/Term (to read speecific part search below topics directly.)
+
+> React
+> DOM
+> Stateless Components (Functional Components)
+> Stateful Components (Class Components)
+> What are faetures of REACT
+> `this` KEYWORD
+> ARROW FUNCTIONS
+> BIND ,CALL ,APPLY
+> HIGHER ORDER COMP HOC
+> create-react-app
+> REACT HOOKS
+> Functional Component in Life Cycle using UseEffect
+      >>> componentDidMount
+      >>> componentDidUpdate
+      >>> componentWillUnmount
+      >>> componentDidCatch
+> Class based Life Cycle with execution sequence
+> REDUX
+> REACT LIFE CYCLE
+> CONTROLLED && UNCONTROLLED COMPO IN REACT
+> MODEL VIEW CONTROLLER (MVC)
+> PURE COMPONENTS
+> createElement()
+> Babel
+> Tree Shaking
+> ONE-WAY (Unidirectional)data binding
+> React faster than angular ?
+> Props VS State
+> Server-side rendering
+> REF (reference) in Reactjs
+> npm (Node Package Manager) VS npx
+> Synthetic Events
+> Event pooling
+> Event Bubbling vs Event Propagation
+> Event Delegation
+
+
+
+
+
+/////////////////////////////////////////////  START  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
 ## React
 
 Overview:
@@ -49,7 +95,7 @@ Here's a high-level explanation of how the Virtual DOM works:
 - In Browser you can see REAL DOM
 - The Virtual DOM is an abstraction used by certain frontend libraries and frameworks
 
------------------------------------------------------------------------------------------------------------------------------s
+-----------------------------------------------------------------------------------------------------------------------------
 
 ## Stateless Components (Functional Components):
 
@@ -107,7 +153,7 @@ return (
 Note:-
 The useState and other hooks enable functional components to manage state and have more advanced behavior, blurring the distinction between stateless and stateful components to some extent.
 
----
+---------------------------------------------------------------------------------------------------------------------------
 
 ## What are faetures of REACT :
 
@@ -132,7 +178,7 @@ for example:-
 -One-Way Data Binding:
 React uses one-way data binding, where changes in the parent component trigger updates in child components.
 
----
+---------------------------------------------------------------------------------------------------------------------------
 
 ## `this` KEYWORD { both class-based and functional components } :
 
@@ -209,7 +255,7 @@ return this; // window
 
 > > > End
 
----
+------------------------------------------------------------------------------------------------------------------------
 
 <!-- FUNCTIONAL COMPONENTS -->
 
@@ -239,7 +285,7 @@ return (
 
 > > > End
 
----
+-----------------------------------------------------------------------------------------------------------------------
 
 ## ARROW FUNCTIONS :
 
@@ -424,8 +470,282 @@ export default App;
 CLI command to create a new React.js application with a predefined and optimized project structure.
 It abstracts away the configuration and setup of build tools and development dependencies.
 
+----------------------------------------------------------------------------------------------------------------------
+
+## REACT HOOKS
+
+- React Hooks are functions that let you use state and other React features in functional components.
+- allow functional components to manage state, lifecycle methods, context, and more, which were previously only possible in class components. 
+
+- Here are some of the most commonly used React Hooks:
+1> useState
+2> useEffect
+3> useContext
+4> useReducer
+5> useCallback
+6> useMemo
+7> 
+
+1> useState :-
+- useState allows functional components to manage state.
+- It comes with two values: the current state and a function to update that state
+
+const [state, setState] = useState(initialState);
+
+
+
+2> useEffect: -
+- useEffect is used for handling side effects in functional components (e.g., data fetching, subscriptions, manual DOM manipulations).
+- useEffect is a replacement for lifecycle methods like componentDidMount, componentDidUpdate, and componentWillUnmount in class components.
+
+
+useEffect(() => {
+  // Side effect code
+  return () => {
+    // Cleanup code (optional)
+  };
+}, [dependencies]);
+
+
+
+basic eg
+
+1. Basic Usage:
+import React, { useState, useEffect } from 'react';
+
+function ExampleComponent() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Side effect: fetch data
+    fetchData().then(result => setData(result));
+
+    // Cleanup function (optional)
+    return () => {
+      // Cleanup code (e.g., cancel subscriptions)
+    };
+  }, []); // Empty dependency array means the effect runs once on mount
+
+  return <div>{data}</div>;
+}
+
+2. Using Dependencies:
+
+useEffect(() => {
+    // Side effect: fetch user data based on userId
+    fetchUserData(userId).then(result => setUserData(result));
+
+    // Cleanup function (optional)
+    return () => {
+      // Cleanup code (e.g., cancel subscriptions)
+    };
+  }, [userId]); // Run the effect whenever userId changes
+
+
+3. Cleanup and Unmounting:
+
+  useEffect(() => {
+    // Side effect: subscribe to some external resource
+    const subscription = subscribeToResource(value);
+
+    // Cleanup function (will run when the component unmounts or when value changes)
+    return () => {
+      // Cleanup code (e.g., unsubscribe from the resource)
+      subscription.unsubscribe();
+    };
+  }, [value]);
+
+
+Key Points:-->
+
+* Dependencies
+If you pass a list of dependencies, the effect will re-run whenever any of the dependencies change.
+If the dependency list is empty, the effect runs once after the initial render.
+
+* Cleanup:
+The optional cleanup function returned from useEffect is executed when the component unmounts or when the dependencies change.
+
+* Async Effects:
+useEffect itself cannot be async, but you can define an async function inside it and invoke it immediately.
+
+useEffect(() => {
+  const fetchData = async () => {
+    const result = await fetchData();
+    setData(result);
+  };
+
+  fetchData();
+}, []);
+
 
 --------------------------------------------------------------------------------------------------------------------
+
+## Functional Component in Life Cycle using UseEffect :- 
+
+In functional components, you can use the useEffect hook to replicate the behavior of various lifecycle methods found in class components. 
+
+1> componentDidMount :
+- componentDidMount is invoked after the component has been added to the DOM. You can achieve the same effect using useEffect
+with an empty dependency array.
+
+import React, { useEffect } from 'react';
+
+function FunctionalComponent() {
+  useEffect(() => {
+    // Effect code here
+    console.log('Component mounted');
+
+    // Cleanup (optional)
+    return () => {
+      console.log('Component will unmount');
+    };
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+  return <div>Functional Component Content</div>;
+}
+
+
+2> componentDidUpdate :
+
+- componentDidUpdate is called after the component's updates are flushed to the DOM. You can replicate this using useEffect with a dependency array containing the variables you want to watch for changes.
+
+import React, { useState, useEffect } from 'react';
+
+function FunctionalComponent({ propValue }) {
+  const [state, setState] = useState('');
+
+  useEffect(() => {
+    // Effect code here
+    console.log('Component updated');
+
+    // Cleanup (optional)
+    return () => {
+      console.log('Component will unmount');
+    };
+  }, [propValue, state]); // Watch propValue and state for changes
+
+  return (
+    <div>
+      <p>Prop Value: {propValue}</p>
+      <p>State Value: {state}</p>
+    </div>
+  );
+}
+
+
+3> componentWillUnmount :
+
+- componentWillUnmount is called just before the component is removed from the DOM. In a functional component, you can achieve the same by returning a cleanup function from useEffect.
+
+import React, { useEffect } from 'react';
+
+function FunctionalComponent() {
+  useEffect(() => {
+    // Effect code here
+    console.log('Component mounted');
+
+    // Cleanup function (optional)
+    return () => {
+      console.log('Component will unmount');
+    };
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+  return <div>Functional Component Content</div>;
+}
+
+
+4> componentDidCatch (Error Boundary):
+
+- componentDidCatch is used for error boundaries. In functional components, you can use a combination of useEffect and useState to implement a simple error boundary.
+
+import React, { useState, useEffect } from 'react';
+
+function ErrorBoundary({ children }) {
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Effect code here
+    const handleError = (error) => {
+      setError(error);
+    };
+
+    window.addEventListener('error', handleError);
+
+    // Cleanup (optional)
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
+  }, []);
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return children;
+}
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Class based Life Cycle with execution sequence
+
+Note: Starting from React 16.3, some lifecycle methods like componentWillMount and componentWillUpdate are deprecated
+
+import React, { Component } from 'react';
+
+class LifecycleExample extends Component {
+  constructor(props) {
+    super(props);
+    console.log('Constructor: Component is constructed');
+    this.state = { data: 'Initial data' };
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount: Component will mount soon');
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount: Component did mount');
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('componentWillUpdate: Component will update');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate: Component did update');
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount: Component will unmount');
+  }
+
+  render() {
+    console.log('Render: Component is rendering');
+    return <div>{this.state.data}</div>;
+  }
+}
+
+export default LifecycleExample;
+
+
+Now, let's examine the sequence of console logs:
+
++ This is the initial mount sequence (console logs).
+Constructor: Component is constructed
+componentWillMount: Component will mount soon
+Render: Component is rendering
+componentDidMount: Component did mount
+
++  if there are updates (e.g., state changes or props changes), the update sequence will be triggered (console logs):
+componentWillUpdate: Component will update
+Render: Component is rendering
+componentDidUpdate: Component did update
+
++ if the component is unmounted (console logs)
+componentWillUnmount: Component will unmount
+
+-------------------------------------------------------------------------------------------------------------------
 
 ## REDUX
 
@@ -650,11 +970,17 @@ Here are the key points about tree shaking:
 
 <!-- REACT FIBER -->
 
-React Fiber is an internal architecture of React that allows concurrent rendering and incremental updates.
-It was introduced with React v16.3
+React Fiber is an internal reconciliation algorithm used by React to perform the virtual DOM diffing and update the actual DOM efficiently. It was introduced to address performance bottlenecks and make React more responsive, especially in cases of large and complex component trees.
 
-This increase efficiency when rendering anumations ,gestures etc. and also helps in assigning priority to 
-updates based on requirements , thereby increasing overall efficiency.
+- Reconciliation: React Fiber is an internal architecture of React that allows concurrent rendering and incremental updates.
+
+- Incremental Rendering: React Fiber allows the rendering work to be split into chunks, making it incremental. This means that React can pause and resume work, allowing for better responsiveness and a more fluid user experience.
+
+- Priority and Scheduling: React Fiber introduces the concept of priority and scheduling. Different types of updates (e.g., user interactions, animations, data fetching) can be assigned different priorities. This allows React to prioritize more important updates, ensuring a smoother user experience.
+
+- Time Slicing: It is feature of React Fiber that allows the rendering work to be spread across multiple frames, preventing the main thread from being blocked for extended periods. This contributes to better performance and a more responsive UI.
+
+- Concurrency Model: React Fiber introduces a concurrency model that enables parallel processing of multiple tasks. This is particularly useful in handling asynchronous operations and improving the efficiency of rendering in a multi-core environment.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -758,6 +1084,168 @@ SEO challenges: Search engines may face difficulties crawling and indexing dynam
 
 
 ------------------------------------------------------------------------------------------------------------------------------
+
+## REF (reference) in Reactjs :- 
+
+- Refs are a way to get a direct reference to a DOM element , allowing you to interact with it imperatively.
+
+import { useRef, useEffect } from 'react';
+
+function MyComponent() {
+  const myInputRef = useRef();
+
+  useEffect(() => {
+    myInputRef.current.focus();
+  }, []);
+
+  return <input ref={myInputRef} />;
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+## npm (Node Package Manager) VS npx :- 
+
+- npm is the default package manager for Node.js
+- npm is used to install, manage, and distribute JavaScript packages
+
+- npx is a package runner tool
+- main use cases is to run a package that is not globally installed without having to install it first.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+## Synthetic Events
+
+- In React, synthetic events are a cross-browser wrapper around the native browser events.
+- They are instances of the SyntheticEvent interface, provided by React to normalize the differences between native browser events and ensure consistent behavior across different browsers.
+
+The main advantages of using synthetic events in React are:
+
+- Cross-browser Compatibility:
+Synthetic events provide a consistent interface for handling events, regardless of the browser
+
+- Event Pooling:
+React uses a technique called event pooling to improve performance. When an event is handled, the corresponding SyntheticEvent object is reused and properties are nullified after the event callback has been invoked. This reduces memory usage and improves garbage collection.
+
+- Normalized Properties:
+Synthetic events have normalized properties, meaning that properties like target and currentTarget are consistent across different types of events. 
+
+- you won't need to worry about the differences between native events and synthetic events in React. React abstracts away these details
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+## Event pooling
+
+
+Event pooling is a technique used internally by React to improve performance and memory usage when handling events in the DOM. When an event occurs, React creates a synthetic event object (an instance of SyntheticEvent) to represent that event. However, instead of creating a new object for each event, React follows a process known as event pooling.
+
+The key idea behind event pooling is to reuse a small pool of event objects for different events. After an event handler is executed, React resets the properties of the event object, making it ready for reuse in subsequent events. This approach helps reduce memory allocation and deallocation overhead associated with creating and destroying many objects in rapid succession
+
+Here's a simplified overview of how event pooling works:
+
+Event Creation:
+When an event occurs (e.g., a button click), React creates a synthetic event object and populates it with information about the event.
+
+Event Handling:
+The event object is passed to the corresponding event handler registered in the React application.
+
+Reset and Return to Pool:
+After the event handler is executed, React resets the properties of the event object to their initial values.
+The reset event object is then returned to the pool for potential reuse in another event.
+
+Reuse in Subsequent Events:
+If another event occurs, React can reuse an event object from the pool instead of creating a new one, reducing the number of objects allocated.
+This approach helps in scenarios where many events are happening in quick succession, such as user interactions. By reusing event objects, React minimizes the impact on memory and garbage collection, improving overall performance.
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+## Event Bubbling vs Event Propagation:
+
+- Event bubbling and event propagation are concepts related to the way events are handled in the Document Object Model
+(DOM) of web pages, including React applications. Understanding these concepts is crucial for effective event handling in React.
+
+
+<!-- Event Bubbling -->
+
+- Event bubbling refers to the natural order in which events are propagated through the DOM hierarchy. 
+- When an event occurs on a nested element, the event is first captured at the innermost target element, then it bubbles up through its ancestors.
+- For example, consider the following HTML structure:
+
+<div id="parent">
+  <button id="child">Click me</button>
+</div>
+
+- If a click event occurs on the button, the event first goes through the button's event handlers and then bubbles up to the div element, triggering its event handlers.
+
+
+<!-- Event Propagation: -->
+
+- Event propagation refers to the mechanism by which events are propagated through the DOM hierarchy during the 
+capture and bubbling phases. There are two main phases in event propagation:
+
+1> Capture Phase:
+- Event travels down from the root of the DOM tree to the target element.
+- This phase allows capturing events on ancestors before they reach the target.
+
+2> Bubbling Phase:
+- Event travels up from the target element to the root of the DOM tree.
+- This phase allows handling events on ancestors after they have been processed on the target.
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+## Event Delegation :-
+
+- Delegated event handling using bubbling is a common pattern in large applications. Instead of attaching event handlers to numerous individual elements, you attach a single event handler to a common ancestor and use event bubbling to determine the target.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Delegation Example</title>
+</head>
+<body>
+
+  <ul id="parentList">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <!-- More dynamically generated or added items -->
+  </ul>
+
+  <script>
+    // Event delegation in JavaScript
+    const parentList = document.getElementById('parentList');
+
+    // Event handler for all list items
+    const handleItemClick = (event) => {
+      const target = event.target;
+      if (target.tagName === 'LI') {
+        console.log('Clicked on:', target.textContent);
+      }
+    };
+
+    // Attach a single event listener to the parent
+    parentList.addEventListener('click', handleItemClick);
+  </script>
+
+</body>
+</html>
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
 
 
 
